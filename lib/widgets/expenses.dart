@@ -42,11 +42,10 @@ class _ExpensesState extends State<Expenses> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8.0,8,8,8),
       child: Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
