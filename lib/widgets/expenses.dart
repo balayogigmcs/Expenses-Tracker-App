@@ -26,37 +26,50 @@ class _ExpensesState extends State<Expenses> {
         category: Category.leisure)
   ];
 
+  void _addExpense(Expense expense){
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => const NewExpenses(),
+      builder: (ctx) =>  Padding(
+        padding:  const EdgeInsets.all(8.0),
+        child:  NewExpenses(onAddExpense: _addExpense),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text('Expenses Tracker'),
-        actions: [
-          IconButton(
-            onPressed: _openAddExpenseOverlay,
-            icon: const Icon(
-              Icons.add,
-              size: 50,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Scaffold(
+        backgroundColor: Colors.blueGrey,
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: const Text('Expenses Tracker'),
+          actions: [
+            IconButton(
+              onPressed: _openAddExpenseOverlay,
+              icon: const Icon(
+                Icons.add,
+                size: 50,
+              ),
             ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const Text(' The Chart'),
-          Expanded(
-            child: ExpensesList(expenses: _registeredExpenses),
-          ),
-        ],
+          ],
+        ),
+        body: Column(
+          children: [
+            const Text(' The Chart'),
+            Expanded(
+              child: ExpensesList(expenses: _registeredExpenses),
+            ),
+          ],
+        ),
       ),
     );
   }
