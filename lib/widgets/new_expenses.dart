@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:expenses_tracker_app/models/expense.dart';
+
 
 class NewExpenses extends StatefulWidget {
   const NewExpenses({super.key});
@@ -14,11 +14,19 @@ class NewExpenses extends StatefulWidget {
 class _NewExpensesState extends State<NewExpenses> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
-  void _presentDatePicker(){
+  void _presentDatePicker() async {
     final now = DateTime.now();
-    final firstDate = DateTime(now.year-1,now.month,now.day);
-    showDatePicker(context: context,initialDate:now , firstDate: firstDate, lastDate: now);
+    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final pickedDate = await showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: firstDate,
+        lastDate: now);
+        setState(() {
+         _selectedDate = pickedDate; 
+        });
   }
 
   void dispose() {
@@ -51,12 +59,14 @@ class _NewExpensesState extends State<NewExpenses> {
                 ),
               ),
             ),
-            const SizedBox(width: 20,),
+            const SizedBox(
+              width: 20,
+            ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Selected Date'),
+                   Text(_selectedDate == null? 'No Selected Date' : formatter.format(_selectedDate!) ),
                   IconButton(
                     onPressed: _presentDatePicker,
                     icon: const Icon(Icons.calendar_month),
