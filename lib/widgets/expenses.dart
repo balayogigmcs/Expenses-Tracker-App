@@ -51,6 +51,13 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget mainContent = const Text("Expenses not found, Add some!");
+    if (_registeredExpenses.isNotEmpty){
+      mainContent = ExpensesList(
+                  expenses: _registeredExpenses,
+                  onRemoveExpense: _removeExpense);
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 8),
       child: Scaffold(
@@ -72,9 +79,7 @@ class _ExpensesState extends State<Expenses> {
           children: [
             const Text(' The Chart'),
             Expanded(
-              child: ExpensesList(
-                  expenses: _registeredExpenses,
-                  onRemoveExpense: _removeExpense),
+              child: mainContent,
             ),
           ],
         ),
