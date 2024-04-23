@@ -26,9 +26,15 @@ class _ExpensesState extends State<Expenses> {
         category: Category.leisure)
   ];
 
-  void _addExpense(Expense expense){
+  void _addExpense(Expense expense) {
     setState(() {
       _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
     });
   }
 
@@ -36,16 +42,17 @@ class _ExpensesState extends State<Expenses> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (ctx) =>  Padding(
-        padding:  const EdgeInsets.all(8.0),
-        child:  NewExpenses(onAddExpense: _addExpense),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: NewExpenses(onAddExpense: _addExpense),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0,8,8,8),
+      padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 8),
       child: Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
@@ -65,7 +72,9 @@ class _ExpensesState extends State<Expenses> {
           children: [
             const Text(' The Chart'),
             Expanded(
-              child: ExpensesList(expenses: _registeredExpenses),
+              child: ExpensesList(
+                  expenses: _registeredExpenses,
+                  onRemoveExpense: _removeExpense),
             ),
           ],
         ),
