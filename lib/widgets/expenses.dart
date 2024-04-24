@@ -4,7 +4,6 @@ import 'package:expenses_tracker_app/models/expense.dart';
 import 'package:expenses_tracker_app/widgets/expenses_list/expenses_list.dart';
 import 'package:expenses_tracker_app/widgets/new_expenses.dart';
 
-
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
@@ -67,6 +66,9 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    //final height = MediaQuery.of(context).size.height;
+
     Widget mainContent =
         const Center(child: Text("Expenses not found, Add some!"));
     if (_registeredExpenses.isNotEmpty) {
@@ -76,7 +78,7 @@ class _ExpensesState extends State<Expenses> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 8),
       child: Scaffold(
-        backgroundColor:Color.fromARGB(255, 38, 181, 81),
+        backgroundColor: Color.fromARGB(255, 38, 181, 81),
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 3, 90, 29),
           title: const Text('Expenses Tracker'),
@@ -90,16 +92,26 @@ class _ExpensesState extends State<Expenses> {
             ),
           ],
         ),
-        body: Column(
-          children: [
-             Chart(expenses: _registeredExpenses),
-            Expanded(
-              child: mainContent,
-            ),
-          ],
-        ),
+        body: width < 600
+            ? Column(
+                children: [
+                  Chart(expenses: _registeredExpenses),
+                  Expanded(
+                    child: mainContent,
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: Chart(expenses: _registeredExpenses),
+                  ),
+                  Expanded(
+                    child: mainContent,
+                  ),
+                ],
+              ),
       ),
     );
   }
 }
-
