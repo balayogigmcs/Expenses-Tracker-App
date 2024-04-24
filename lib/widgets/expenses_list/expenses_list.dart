@@ -3,7 +3,8 @@ import 'package:expenses_tracker_app/models/expense.dart';
 import 'package:expenses_tracker_app/widgets/expenses_list/expense_item.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList({super.key, required this.expenses,required this.onRemoveExpense});
+  const ExpensesList(
+      {super.key, required this.expenses, required this.onRemoveExpense});
 
   final List<Expense> expenses;
   final void Function(Expense expense) onRemoveExpense;
@@ -13,8 +14,11 @@ class ExpensesList extends StatelessWidget {
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (cxt, index) => Dismissible(
+        background: Container(
+          color: Theme.of(context).colorScheme.error,
+        ),
         key: ValueKey(expenses[index]),
-        onDismissed: (direction){
+        onDismissed: (direction) {
           onRemoveExpense(expenses[index]);
         },
         child: ExpenseItem(
