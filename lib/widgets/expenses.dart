@@ -1,7 +1,9 @@
+import 'package:expenses_tracker_app/widgets/chart/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses_tracker_app/models/expense.dart';
 import 'package:expenses_tracker_app/widgets/expenses_list/expenses_list.dart';
 import 'package:expenses_tracker_app/widgets/new_expenses.dart';
+
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -74,9 +76,9 @@ class _ExpensesState extends State<Expenses> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 8),
       child: Scaffold(
-        backgroundColor:Color.fromARGB(255, 168, 181, 172),
+        backgroundColor:Color.fromARGB(255, 38, 181, 81),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 61, 147, 193),
+          backgroundColor: Color.fromARGB(255, 3, 90, 29),
           title: const Text('Expenses Tracker'),
           actions: [
             IconButton(
@@ -90,7 +92,7 @@ class _ExpensesState extends State<Expenses> {
         ),
         body: Column(
           children: [
-            const Text(' The Chart'),
+             Chart(expenses: _registeredExpenses),
             Expanded(
               child: mainContent,
             ),
@@ -100,3 +102,4 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 }
+

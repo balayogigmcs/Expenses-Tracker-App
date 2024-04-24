@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 195, 164, 164),
+  seedColor: const Color.fromARGB(255, 250, 249, 249),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 77, 86, 7),
+  seedColor:const  Color.fromARGB(255, 163, 167, 153),
 );
 
 void main() {
@@ -28,12 +28,7 @@ void main() {
         style: ElevatedButton.styleFrom(
             backgroundColor: kDarkColorScheme.onPrimaryContainer),
       ),
-      textTheme: ThemeData().textTheme.copyWith(
-            titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kDarkColorScheme.onPrimary,
-                fontSize: 18),
-          ),
+      
     ),
     theme: ThemeData().copyWith(
       useMaterial3: true,

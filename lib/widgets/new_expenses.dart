@@ -77,7 +77,9 @@ class _NewExpensesState extends State<NewExpenses> {
           controller: _titleController,
           maxLength: 50,
           decoration: const InputDecoration(
-            label: Text('Title'),
+            label: Text(
+              'Title',
+            ),
           ),
         ),
         Row(
