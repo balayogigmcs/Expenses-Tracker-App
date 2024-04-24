@@ -74,9 +74,9 @@ class _ExpensesState extends State<Expenses> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 8),
       child: Scaffold(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor:Color.fromARGB(255, 168, 181, 172),
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color.fromARGB(255, 61, 147, 193),
           title: const Text('Expenses Tracker'),
           actions: [
             IconButton(
