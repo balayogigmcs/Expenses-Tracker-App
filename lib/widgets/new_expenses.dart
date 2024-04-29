@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses_tracker_app/models/expense.dart' as expense;
@@ -33,12 +35,25 @@ class _NewExpensesState extends State<NewExpenses> {
     });
   }
 
-  void _submitExpenseData() {
-    final enteredAmount = double.tryParse(_amountController.text);
-    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _selectedDate == null) {
+  void _showDialog() {
+    if (Platform.isIOS){
+    showCupertinoDialog(
+        context: context,
+        builder: (ctx) { return
+           CupertinoAlertDialog(
+            title: const Text('Invalid Input'),
+            content: const Text('Please enter valid title, amount and date'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Okay'))
+            ],
+          );
+        });
+    }
+    else{
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -53,6 +68,16 @@ class _NewExpensesState extends State<NewExpenses> {
           ],
         ),
       );
+    }
+  }
+
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      _showDialog();
       return;
     }
     widget.onAddExpense(
@@ -197,66 +222,68 @@ class _NewExpensesState extends State<NewExpenses> {
                       ),
                     ],
                   ),
-                  if(width >= 600)
-                  Row(children: [
-                  const Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        _submitExpenseData();
-                      },
-                      child: const Text('Save Expense'),
-                    ),],
+                if (width >= 600)
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      OutlinedButton(
+                        onPressed: () {
+                          _submitExpenseData();
+                        },
+                        child: const Text('Save Expense'),
+                      ),
+                    ],
                   )
-                  else
-                    Row(
-                  children: [
-                    DropdownButton(
-                        value: _selectedCategory,
-                        items: expense.Category.values
-                            .map(
-                              (category) => DropdownMenuItem(
-                                value: category,
-                                child: Text(
-                                  category.name.toUpperCase(),
+                else
+                  Row(
+                    children: [
+                      DropdownButton(
+                          value: _selectedCategory,
+                          items: expense.Category.values
+                              .map(
+                                (category) => DropdownMenuItem(
+                                  value: category,
+                                  child: Text(
+                                    category.name.toUpperCase(),
+                                  ),
                                 ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          if (value == null) {
-                            return;
-                          }
-                          setState(() {
-                            _selectedCategory = value;
-                          });
-                        }),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        _submitExpenseData();
-                      },
-                      child: const Text('Save Expense'),
-                    ),
-                  ],
-                )
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            setState(() {
+                              _selectedCategory = value;
+                            });
+                          }),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      OutlinedButton(
+                        onPressed: () {
+                          _submitExpenseData();
+                        },
+                        child: const Text('Save Expense'),
+                      ),
+                    ],
+                  )
               ],
             ),
           ),
